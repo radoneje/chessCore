@@ -10,19 +10,19 @@ const initBoard=async()=>{
     let port=null;
     let awlPorts=await SerialPort.list()
     awlPorts.forEach(awlPort=>{
+       
         if(!portDescription){
             if(awlPort.vendorId=='0403' && awlPort.productId=='6001')
-            portDescription=awlPort
-            serialOpen(portDescription)
+            serialOpen(awlPort)
         }
     })
     if(!portDescription)
         setTimeout(initBoard, 1000)
 }
 const serialOpen=(descr)=>{
-
+    console.log(descr)
    // var serialPort =
-   const port = new SerialPort({path:"COM3",baudRate: 9600},false);
+   const port = new SerialPort({path:descr.path,baudRate: 9600},false);
    port.on('error', function(err) { console.log('Error: ', err.message); })
    port.open(err=>{
     if(err)
