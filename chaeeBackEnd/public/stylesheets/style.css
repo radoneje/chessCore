@@ -66,6 +66,7 @@ a {
   .chessBoardCell{
     width: 40px;
     height: 40px;
+    font-size: 12px;
   }
   .chessBoard{
     margin: 32px 0;;
