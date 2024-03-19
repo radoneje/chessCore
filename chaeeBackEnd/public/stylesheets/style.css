@@ -59,7 +59,7 @@ a {
     padding-top: 0;
 }
 @media all and(max-width: 600px){
-  .playerCell{
+  .chessBoardCell{
     width: 20px;
     height: 20px;
   }
