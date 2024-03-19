@@ -71,6 +71,9 @@ a {
   .chessBoard{
     margin: 32px 0;;
   }
+  .playerCell{
+    font-size: 37px;
+  }
 }
 
 
