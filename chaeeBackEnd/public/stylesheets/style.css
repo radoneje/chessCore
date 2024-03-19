@@ -67,6 +67,9 @@ a {
     width: 40px;
     height: 40px;
   }
+  .chessBoard{
+    margin: 32px 0;;
+  }
 }
 
 
