@@ -1,0 +1,12 @@
+{
+    "coockieSecret": "dwgfewvefvev",
+    "pgConnection": {
+        "host": "127.0.0.1",
+        "user": "NewsFactoryUser",
+        "password": "ib",
+        "database": "chess"
+    },
+    "timeout": 10,
+    "countNewsOnPage": 30,
+    "uloadPath": "/var/uploads"
+}

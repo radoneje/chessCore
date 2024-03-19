@@ -12,13 +12,14 @@ from collections import deque
 
 msgStack= deque([]) 
 passStack= []
-serialNo=0
+serialNo=""
 
 def upload(sn):
-    url="http://localhost:3301/api/chess"
+    url="http://localhost:3301/api/chess/"+sn
     while True:
         time.sleep(.5)
-        print 
+        
+         
         if len(msgStack)>0:
             try:
                 x = requests.post(url, json = msgStack[len(msgStack)-1])
@@ -51,20 +52,23 @@ def receiveMessage(ser):
                 buf=rawParser.parseString(serialString, [] )
                 
                 for item in buf:
-                    arr=bytearray(item)
-                    if arr[0]==0x8e:
-                        rawParser.parseBoardUpdate(arr, passStack)
+                
+                    if item[0]==0x8e:
+                        
+                        rawParser.parseBoardUpdate(item, passStack)
                         ser.write(bytearray([commands.DGT_SEND_BRD]))
                     else:
-                        if arr[0]==0x86 and arr[0]==0x86 and len(arr)==67:
-                            rawParser.parseBoardState(arr, msgStack)
+                        if item[0]==0x86  and len(item)==67:
+                            
+                            rawParser.parseBoardState(item, msgStack, passStack)
+                            passStack.clear()
                             
                         else:
-                            if arr[0]==0x91 and arr[2]==0x08:
-                                serialNo=rawParser.parseSn(arr)
+                            if item[0]==0x91 and item[2]==0x08:
+                                serialNo=rawParser.parseSn(item)
                                 initSendQuery(serialNo)
                             else:
-                                print(arr.hex(" "))
+                                print(item)
         
     #except:
         #print("receive thread Err")
