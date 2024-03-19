@@ -2,4 +2,62 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  select#device
+    each device in devices
+      option(value=device.id selected="true") #{device.title} 
+  .chessBoard
+        .chessBoardHead
+          #positionDate
+        .chessBoardTop
+          .chessBoardLeft
+            for number in ["8", "7" , "6", "5", "4", "3", "2", "1"]
+                .chessBoardCell #{number}
+          .chessBoardRight.chessBoardPole  
+            for row in ["8", "7" , "6", "5", "4", "3", "2", "1"]
+              .chessBoardRow.playerRow(row=row)
+                for col in ["A", "B" , "C", "D", "E", "F", "H", "G"]
+                  .chessBoardCell.playerCell(num=col+row) 
+              
+        .chessBoardBottom
+          .chessBoardLeft
+            .chessBoardCell &nbsp;
+          .chessBoardRight
+            .chessBoardRow
+              for number in ["A", "B" , "C", "D", "E", "F", "H", "G"]
+                .chessBoardCell() #{number}
+  script.
+    const getCurrPos=async ()=>{
+      try{
+        let r=await fetch("/api/currPosition/"+device.value)
+        if(r.ok)
+        {
+          let dt=await r.json();
+          positionDate.innerText=dt.date;
+          document.querySelectorAll(".playerCell").forEach(cell=>{
+            let num=cell.getAttribute("num").toLowerCase();
+            
+            let figureArr=dt.figurePosition.filter(fp=>{
+             
+              return fp.position==num
+              })
+            if(figureArr.length>0){
+
+              console.log("find")
+              cell.innerHTML=figureArr[0].unicode
+              cell.setAttribute("figure",figureArr[0].color+figureArr[0].short)
+            }
+            else{
+              cell.innerHTML=""
+              cell.removeAttribute("figure")
+            }
+
+          })
+
+        }
+      }
+      catch(e){
+        console.warn(e)
+      }
+      setTimeout(getCurrPos,5*1000)
+    }
+    getCurrPos();

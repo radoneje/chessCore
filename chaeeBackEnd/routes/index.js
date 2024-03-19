@@ -7,14 +7,28 @@ const capitalizeFirstLetter = (string) => {
 }
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express' });
+router.get('/', async  (req, res, next)=> {
+  let devices=await req.knex("t_devices").orderBy("id", "desc")
+  res.render('index', { title: 'chess', devices });
 });
-router.post('/api/chess/:deviceId', async (req, res, next) => {
+
+router.get('/api/currPosition/:deviceId', async  (req, res, next)=> {
+  let position=(await req.knex("t_devicePosition").where({deviceId:req.params.deviceId}).orderBy("id", "desc").limit(1))[0]
+  
+  let figurePosition=await req.knex("v_figurePosition").where({devicePositionId:position.id})
+  res.json({figurePosition, date:moment(position.date).format("DD.MM.YYYY HH:mm:ss")})
+});
+
+
+router.post('/api/chess/:deviceSN', async (req, res, next) => {
   try {
+    let devices=await req.knex("t_devices").where({sn:req.params.deviceSN})
+    if(devices.length==0)
+      devices=await req.knex("t_devices").insert({sn:req.params.deviceSN, title:req.params.deviceSN},"*")
+    let deviceId=devices[0].id;
     let devicePosition = (await req.knex("t_devicePosition").insert({
       date: new Date(req.body.time * 1000),
-      deviceId: req.params.deviceId
+      deviceId: deviceId
     }, "*"))[0]
     for (let field of req.body.board) {
       let fieldName = Object.keys(field)[0]

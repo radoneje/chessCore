@@ -1,3 +1,8 @@
+:root{
+  --whiteBg:#e5d191;
+  --blackBg:#a77f44;
+
+}
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -6,3 +11,52 @@ body {
 a {
   color: #00B7FF;
 }
+*{
+  box-sizing: border-box
+}
+.chessBoard{
+  width: 800px;
+  margin: 32px;
+  border:1px solid gray;
+  border-radius: 12px;
+}
+.chessBoardCell{
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    font-size: 24px;
+    padding: 8px;
+}
+.chessBoardBottom{
+  display: flex;
+}
+
+.chessBoardRow{
+  display: flex;
+}
+.chessBoardPole{
+  border:1px solid gray;
+
+}
+.chessBoardTop{
+  display: flex;
+}
+
+.playerRow:nth-child(odd) .playerCell:nth-child(odd), .playerRow:nth-child(even) .playerCell:nth-child(even)  {
+  background-color: var(--whiteBg)
+}
+.playerRow:nth-child(even) .playerCell:nth-child(odd), .playerRow:nth-child(odd) .playerCell:nth-child(even) {
+  
+  background-color: var(--blackBg)
+}
+#positionDate{
+  padding: 10px;
+  text-align: center;
+  font-size: 18px;;
+}
+.playerCell{
+  font-size: 50px;
+    padding-top: 0;
+}
+
+
