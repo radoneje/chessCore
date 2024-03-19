@@ -15,7 +15,7 @@ a {
   box-sizing: border-box
 }
 .chessBoard{
-  width: 800px;
+  width: max-content;
   margin: 32px;
   border:1px solid gray;
   border-radius: 12px;
@@ -57,6 +57,12 @@ a {
 .playerCell{
   font-size: 50px;
     padding-top: 0;
+}
+@media all and(max-width:800px){
+  .playerCell{
+    width: 20px;
+    height: 20px;
+  }
 }
 
 
