@@ -17,7 +17,7 @@ a {
 .chessBoard{
   width: max-content;
   margin: 32px;
-  border:1px solid gray;
+ 
   border-radius: 12px;
 }
 .chessBoardCell{
